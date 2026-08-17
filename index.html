@@ -150,6 +150,28 @@ html,body{
   margin-top:16px;width:100%;padding:15px;border:0;border-radius:999px;
   background:var(--yellow);color:#101214;font-size:18px;font-weight:1000;cursor:pointer
 }
+#helpBtn,#backBtn{
+  margin-top:10px;width:100%;padding:12px;border:1px solid rgba(255,255,255,.25);
+  border-radius:999px;background:rgba(20,25,29,.78);color:#fff;
+  font-size:15px;font-weight:900;cursor:pointer
+}
+.howtoPanel{padding:22px 18px;text-align:left;max-height:calc(100% - 8px);overflow:auto}
+.howtoPanel h1{text-align:center}
+.howtoLead{text-align:center;color:#fff!important;font-weight:800}
+.howtoList{display:grid;gap:9px;margin:16px 0}
+.howtoItem{
+  display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:center;
+  padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.07)
+}
+.howtoNum{
+  width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--yellow);color:#111;font-weight:1000
+}
+.howtoText{font-size:14px;line-height:1.5;color:#e9eef1}
+.judgeGuide{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px;text-align:center}
+.judgeGuide div{padding:9px 4px;border-radius:12px;background:rgba(255,255,255,.07);font-size:11px}
+.judgeGuide b{display:block;margin-bottom:4px;font-size:13px}
+.perfectText{color:#6fe18a}.goodText{color:#ffd84d}.missText{color:#ff6868}
 .note{font-size:12px!important;opacity:.72}
 </style>
 </head>
@@ -188,12 +210,12 @@ html,body{
     <div class="helmet"></div><div class="light"></div>
   </div>
 
-  <div id="tapLabel">TAP = ACCEL ON</div>
+  <div id="tapLabel">アクセル！！</div>
   <div id="tapLayer"></div>
 
   <div id="overlay" class="start-screen">
     <div class="panel">
-      <h1>スラローム・タイミング</h1>
+      <h1>スラローム・トレーニング</h1>
       <p>目標タイムを選んでスタート。</p>
       <div class="modeSelect">
         <button class="modeBtn active" data-mode="8">8秒</button>
@@ -201,8 +223,9 @@ html,body{
         <button class="modeBtn" data-mode="6">6秒</button>
         <button class="modeBtn" data-mode="5">5秒</button>
       </div>
-      <p id="modeNote" class="note">8秒：かなりゆっくり / 判定かなり広め</p>
+      <p id="modeNote" class="note">8秒：普通二輪　合格基準 / 判定かなり広め</p>
       <button id="startBtn">START</button>
+      <button id="helpBtn">遊び方</button>
     </div>
   </div>
 </div>
@@ -291,10 +314,10 @@ function configureMode(mode){
   const note=document.getElementById('modeNote');
   if(note){
     note.textContent=
-      mode===8 ? '8秒：かなりゆっくり / 判定かなり広め' :
-      mode===7 ? '7秒：ゆっくり / 判定広め' :
-      mode===6 ? '6秒：標準 / 判定普通' :
-                 '5秒：速い / 判定シビア';
+      mode===8 ? '8秒：普通二輪　合格基準 / 判定かなり広め' :
+      mode===7 ? '7秒：大型二輪　合格基準 / 判定広め' :
+      mode===6 ? '6秒：ベテランライダーレベル / 判定普通' :
+                 '5秒：指導員レベル / 判定シビア';
   }
 }
 
@@ -656,6 +679,40 @@ function fail(title,reason){
   },450);
 }
 
+function showHowTo(){
+  overlay.classList.add('start-screen');
+  overlay.innerHTML=`
+    <div class="panel howtoPanel">
+      <h1>遊び方</h1>
+      <p class="howtoLead">コーンを曲がる瞬間にタップ！</p>
+
+      <div class="howtoList">
+        <div class="howtoItem">
+          <span class="howtoNum">1</span>
+          <span class="howtoText">目標タイムを選んでスタート</span>
+        </div>
+        <div class="howtoItem">
+          <span class="howtoNum">2</span>
+          <span class="howtoText">アクセルを入れるタイミングで「アクセル！」ボタンをタップ</span>
+        </div>
+        <div class="howtoItem">
+          <span class="howtoNum">3</span>
+          <span class="howtoText">5回中3回以上のPERFECTでクリア</span>
+        </div>
+      </div>
+
+      <div class="judgeGuide">
+        <div><b class="perfectText">PERFECT</b>成功</div>
+        <div><b class="goodText">GOOD</b>失速して続行</div>
+        <div><b class="missText">EARLY / LATE</b>即終了</div>
+      </div>
+
+      <button id="backBtn">もどる</button>
+    </div>`;
+
+  document.getElementById('backBtn').onclick=showStartScreen;
+}
+
 function showStartScreen(){
   overlay.classList.add('start-screen');
   overlay.innerHTML=`
@@ -670,6 +727,7 @@ function showStartScreen(){
       </div>
       <p id="modeNote" class="note"></p>
       <button id="startBtn">START</button>
+      <button id="helpBtn">遊び方</button>
     </div>`;
 
   overlay.style.display='flex';
@@ -679,6 +737,7 @@ function showStartScreen(){
   enableMenuMusicOnFirstInteraction();
 
   document.getElementById('startBtn').onclick=begin;
+  document.getElementById('helpBtn').onclick=showHowTo;
 }
 
 tapLayer.addEventListener('pointerdown',e=>{
@@ -690,6 +749,7 @@ bindModeButtons();
 configureMode(8);
 enableMenuMusicOnFirstInteraction();
 document.getElementById('startBtn').onclick=begin;
+document.getElementById('helpBtn').onclick=showHowTo;
 reset();
 })();
 </script>
