@@ -450,7 +450,7 @@ function stopEngineSounds(){
 
 function startMenuMusic(){
   if(!musicAudio) return;
-  musicAudio.volume=1.0;
+  musicAudio.volume=0.5;
   musicAudio.play().catch(()=>{});
 }
 
@@ -814,7 +814,7 @@ function doTap(){
   if(accelAudio){
     accelAudio.pause();
     accelAudio.currentTime=0;
-    accelAudio.volume=0.9;
+    accelAudio.volume=1.5;
     accelAudio.play().catch(()=>{});
   }
 
