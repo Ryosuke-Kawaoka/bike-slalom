@@ -336,6 +336,17 @@ html,body{
   background:var(--yellow);color:#111;font-weight:1000
 }
 .howtoText{font-size:14px;line-height:1.5;color:#e9eef1}
+.howtoTimingWrap{min-width:0}
+.howtoTimingImage{
+  display:block;
+  width:100%;
+  max-width:340px;
+  height:auto;
+  margin:10px auto 2px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 6px 18px rgba(0,0,0,.30);
+}
 .judgeGuide{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px;text-align:center}
 .judgeGuide div{padding:9px 4px;border-radius:12px;background:rgba(255,255,255,.07);font-size:11px}
 .judgeGuide b{display:block;margin-bottom:4px;font-size:13px}
@@ -344,7 +355,7 @@ html,body{
 </style>
 </head>
 <body>
-<!-- index.html と同じフォルダに music.mp3 / engine.mp3 を置いてください -->
+<!-- index.html と同じフォルダに music.mp3 / engine.mp3 / accel.mp3 / timing-example.png / title-bg.jpg を置いてください -->
 <audio id="musicAudio" loop preload="auto" src="music.mp3"></audio>
 <audio id="engineAudio" loop preload="auto" src="engine.mp3"></audio>
 <audio id="accelAudio" preload="auto" src="accel.mp3"></audio>
@@ -997,7 +1008,7 @@ function showHowTo(){
   overlay.innerHTML=`
     <div class="panel howtoPanel">
       <h1>遊び方</h1>
-      <p class="howtoLead">コーンを曲がる瞬間にタップ！</p>
+      <p class="howtoLead">スラロームのアクセルONのタイミングを練習するゲームです。<br>バイクの向きが変わった時、タイミングよくアクセルを使いましょう。</p>
 
       <div class="howtoList">
         <div class="howtoItem">
@@ -1006,7 +1017,14 @@ function showHowTo(){
         </div>
         <div class="howtoItem">
           <span class="howtoNum">2</span>
-          <span class="howtoText">アクセルを入れるタイミングで「アクセル！」ボタンをタップ</span>
+          <div class="howtoTimingWrap">
+            <div class="howtoText">タイミングよく「アクセル！」ボタンをタップ</div>
+            <img
+              class="howtoTimingImage"
+              src="timing-example.png"
+              alt="PERFECTになるアクセルONのタイミング"
+            >
+          </div>
         </div>
         <div class="howtoItem">
           <span class="howtoNum">3</span>
