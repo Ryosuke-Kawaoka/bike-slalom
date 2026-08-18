@@ -120,6 +120,174 @@ html,body{
 }
 #tapLayer{position:absolute;z-index:25;inset:0}
 
+
+#countdown{
+  position:absolute;
+  z-index:35;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  background:rgba(0,0,0,.10);
+}
+#countdownText{
+  font-size:clamp(72px,22vw,130px);
+  font-weight:1000;
+  color:#fff;
+  text-shadow:
+    0 5px 0 rgba(0,0,0,.55),
+    0 0 24px rgba(255,216,77,.45);
+  transform:scale(1);
+}
+#countdownText.start{
+  font-size:clamp(54px,16vw,100px);
+  color:var(--yellow);
+}
+#countdownText.pop{
+  animation:countPop .45s ease-out;
+}
+@keyframes countPop{
+  0%{transform:scale(.55);opacity:0}
+  35%{transform:scale(1.14);opacity:1}
+  100%{transform:scale(1);opacity:1}
+}
+
+
+#celebration{
+  position:absolute;
+  z-index:34;
+  inset:0;
+  pointer-events:none;
+  display:none;
+  overflow:hidden;
+}
+#celebration.active{
+  display:block;
+  animation:screenFlash .85s ease-out;
+}
+@keyframes screenFlash{
+  0%{background:rgba(255,255,255,.95)}
+  18%{background:rgba(255,216,77,.35)}
+  100%{background:rgba(255,216,77,0)}
+}
+#allPerfectText{
+  position:absolute;
+  left:50%;
+  top:42%;
+  transform:translate(-50%,-50%) scale(.5);
+  width:94%;
+  text-align:center;
+  font-size:clamp(44px,14vw,82px);
+  font-weight:1000;
+  color:#fff;
+  text-shadow:
+    0 4px 0 #111,
+    0 0 12px #ffd84d,
+    0 0 28px #ffd84d;
+  opacity:0;
+}
+#celebration.active #allPerfectText{
+  animation:perfectBurst 1.3s cubic-bezier(.18,.8,.24,1.2) forwards;
+}
+@keyframes perfectBurst{
+  0%{transform:translate(-50%,-50%) scale(.35) rotate(-6deg);opacity:0}
+  35%{transform:translate(-50%,-50%) scale(1.18) rotate(3deg);opacity:1}
+  62%{transform:translate(-50%,-50%) scale(.96) rotate(-1deg);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}
+}
+.confetti{
+  position:absolute;
+  top:-12%;
+  width:10px;
+  height:18px;
+  border-radius:3px;
+  background:var(--yellow);
+  opacity:.95;
+  animation:confettiFall 1.9s linear forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(-10vh) rotate(0deg);opacity:1}
+  100%{transform:translateY(120vh) rotate(720deg);opacity:0}
+}
+#perfectSub{
+  position:absolute;
+  left:50%;
+  top:53%;
+  transform:translateX(-50%);
+  font-size:clamp(18px,5vw,28px);
+  font-weight:900;
+  color:#6fe18a;
+  text-shadow:0 3px 8px #000;
+  opacity:0;
+}
+#celebration.active #perfectSub{
+  animation:subFade .7s .45s ease-out forwards;
+}
+@keyframes subFade{
+  from{opacity:0;transform:translateX(-50%) translateY(12px)}
+  to{opacity:1;transform:translateX(-50%) translateY(0)}
+}
+
+
+#timeoutFx{
+  position:absolute;
+  z-index:34;
+  inset:0;
+  pointer-events:none;
+  display:none;
+  background:rgba(0,0,0,.28);
+}
+#timeoutFx.active{
+  display:block;
+  animation:timeoutFade 1.5s ease-out forwards;
+}
+@keyframes timeoutFade{
+  0%{background:rgba(0,0,0,0)}
+  30%{background:rgba(0,0,0,.42)}
+  100%{background:rgba(0,0,0,.28)}
+}
+#timeoutTitle{
+  position:absolute;
+  left:50%;
+  top:42%;
+  transform:translate(-50%,-50%) scale(.8);
+  width:92%;
+  text-align:center;
+  font-size:clamp(42px,13vw,78px);
+  font-weight:1000;
+  color:#d7dce0;
+  text-shadow:0 4px 12px #000;
+  opacity:0;
+}
+#timeoutFx.active #timeoutTitle{
+  animation:timeoutTitleIn .9s ease-out forwards;
+}
+@keyframes timeoutTitleIn{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(1.18)}
+  55%{opacity:1;transform:translate(-50%,-50%) scale(.96)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+#timeoutSub{
+  position:absolute;
+  left:50%;
+  top:53%;
+  transform:translateX(-50%);
+  width:90%;
+  text-align:center;
+  color:#ffcf7d;
+  font-size:clamp(18px,5vw,28px);
+  font-weight:900;
+  opacity:0;
+}
+#timeoutFx.active #timeoutSub{
+  animation:timeoutSubIn .8s .45s ease-out forwards;
+}
+@keyframes timeoutSubIn{
+  from{opacity:0;transform:translateX(-50%) translateY(12px)}
+  to{opacity:1;transform:translateX(-50%) translateY(0)}
+}
+
 #overlay{
   position:absolute;z-index:40;inset:0;background:rgba(5,8,10,.86);
   display:flex;align-items:center;justify-content:center;padding:22px;text-align:center
@@ -213,7 +381,19 @@ html,body{
   <div id="tapLabel">アクセル！！</div>
   <div id="tapLayer"></div>
 
-  <div id="overlay" class="start-screen">
+  <div id="timeoutFx">
+  <div id="timeoutTitle">TIME OVER...</div>
+  <div id="timeoutSub">惜しい！もう一度チャレンジ</div>
+</div>
+
+<div id="celebration">
+  <div id="allPerfectText">ALL PERFECT!!</div>
+  <div id="perfectSub">5 / 5 PERFECT</div>
+</div>
+
+<div id="countdown"><div id="countdownText"></div></div>
+
+<div id="overlay" class="start-screen">
     <div class="panel">
       <h1>スラローム・トレーニング</h1>
       <p>目標タイムを選んでスタート。</p>
@@ -241,6 +421,10 @@ const countEl=document.getElementById('count');
 const timerEl=document.getElementById('timer');
 const statusEl=document.getElementById('status');
 const substatusEl=document.getElementById('substatus');
+const countdown=document.getElementById('countdown');
+const countdownText=document.getElementById('countdownText');
+const celebration=document.getElementById('celebration');
+const timeoutFx=document.getElementById('timeoutFx');
 const entryGate=document.getElementById('entryGate');
 const finishGate=document.getElementById('finishGate');
 const musicAudio=document.getElementById('musicAudio');
@@ -279,6 +463,7 @@ let entryRunning=false;
 let finishing=false;
 let finished=false;
 let current=0;
+let perfectCount=0;
 let successCount=0;
 let tapped=false;
 let attemptSuccess=false;
@@ -316,8 +501,8 @@ function configureMode(mode){
     note.textContent=
       mode===8 ? '8秒：普通二輪　合格基準 / 判定かなり広め' :
       mode===7 ? '7秒：大型二輪　合格基準 / 判定広め' :
-      mode===6 ? '6秒：ベテランライダーレベル / 判定普通' :
-                 '5秒：指導員レベル / 判定シビア';
+      mode===6 ? '6秒：ベテラン・ライダーレベル / 判定普通' :
+                 '5秒：ベテラン・インストラクターレベル / 判定シビア';
   }
 }
 
@@ -370,6 +555,10 @@ function reset(){
   countEl.textContent=`PERFECT 0 / ${TOTAL}`;
   timerEl.textContent='0.00 s';
   statusEl.textContent='';substatusEl.textContent='';
+  if(!countdownRunning){
+    countdown.style.display='none';
+    countdownText.textContent='';
+  }
   bike.style.opacity='1';
   bike.style.left='50%';bike.style.top='94%';
   bike.style.transform='translate(-50%,-50%) rotate(0deg)';
@@ -409,18 +598,68 @@ function phase(now){
   return Math.max(0,Math.min(1,(now-segmentStart)/attemptDuration()));
 }
 
+
+let countdownRunning=false;
+
+function animateCountdownText(text,isStart=false){
+  countdownText.className=isStart?'start':'';
+  countdownText.textContent=text;
+  void countdownText.offsetWidth;
+  countdownText.classList.add('pop');
+}
+
 function begin(){
+  if(countdownRunning)return;
+
+  countdownRunning=true;
+  reset();
+
   startMenuMusic();
   overlay.classList.remove('start-screen');
   overlay.style.display='none';
 
+  // カウントダウン中からアイドリング音は鳴らしておく
   if(engineAudio){
     engineAudio.volume=0.28;
     engineAudio.currentTime=0;
     engineAudio.play().catch(()=>{});
   }
 
-  reset();
+  countdown.style.display='flex';
+
+  const steps=[
+    {text:'3',ms:700},
+    {text:'2',ms:700},
+    {text:'1',ms:700},
+    {text:'START!',ms:550,start:true}
+  ];
+
+  let index=0;
+
+  const next=()=>{
+    const step=steps[index];
+    animateCountdownText(step.text,!!step.start);
+
+    setTimeout(()=>{
+      index++;
+
+      if(index<steps.length){
+        next();
+      }else{
+        countdown.style.display='none';
+        countdownText.textContent='';
+        countdownRunning=false;
+        beginGame();
+      }
+    },step.ms);
+  };
+
+  next();
+}
+
+function beginGame(){
+  overlay.classList.remove('start-screen');
+  overlay.style.display='none';
 
   entryRunning=true;
   entryStart=performance.now();
@@ -585,6 +824,7 @@ function doTap(){
   tapped=true;
 
   const perfect=Math.abs(d)<=perfectHalf;
+  if(perfect) perfectCount++;
   // PERFECTだけを成功として数え、GOODは失速させる
   attemptSuccess=perfect;
 
@@ -625,34 +865,107 @@ function startFinish(now){
   finishStart=now;
 }
 
+
+
+function launchTimeOverEffect(){
+  timeoutFx.classList.remove('active');
+  void timeoutFx.offsetWidth;
+  timeoutFx.classList.add('active');
+
+  bike.animate([
+    {transform:bike.style.transform,opacity:1},
+    {transform:'translate(-50%,-44%) rotate(0deg) scale(.98)',opacity:.90},
+    {transform:'translate(-50%,-40%) rotate(0deg) scale(.96)',opacity:.72}
+  ],{
+    duration:1100,
+    easing:'ease-out',
+    fill:'forwards'
+  });
+
+  if(navigator.vibrate){
+    navigator.vibrate([80,70,120]);
+  }
+}
+
+function launchAllPerfectCelebration(){
+  celebration.innerHTML=`
+    <div id="allPerfectText">ALL PERFECT!!</div>
+    <div id="perfectSub">${TOTAL} / ${TOTAL} PERFECT</div>
+  `;
+
+  const colors=['#ffd84d','#6fe18a','#ffffff','#ff6868','#5eb8ff'];
+
+  for(let i=0;i<42;i++){
+    const p=document.createElement('div');
+    p.className='confetti';
+    p.style.left=`${Math.random()*100}%`;
+    p.style.background=colors[i%colors.length];
+    p.style.animationDelay=`${Math.random()*.35}s`;
+    p.style.animationDuration=`${1.3+Math.random()*1.1}s`;
+    p.style.width=`${7+Math.random()*7}px`;
+    p.style.height=`${10+Math.random()*16}px`;
+    celebration.appendChild(p);
+  }
+
+  celebration.classList.remove('active');
+  void celebration.offsetWidth;
+  celebration.classList.add('active');
+
+  bike.animate([
+    {transform:bike.style.transform,filter:'drop-shadow(0 7px 7px rgba(0,0,0,.45))'},
+    {transform:'translate(-50%,-50%) rotate(0deg) scale(1.22)',filter:'drop-shadow(0 0 24px rgba(255,216,77,.95))'},
+    {transform:'translate(-50%,-50%) rotate(0deg) scale(1.06)',filter:'drop-shadow(0 0 14px rgba(111,225,138,.8))'}
+  ],{
+    duration:1000,
+    easing:'cubic-bezier(.16,.8,.24,1)',
+    fill:'forwards'
+  });
+
+  if(navigator.vibrate){
+    navigator.vibrate([60,40,80,40,120]);
+  }
+}
+
 function finish(now){
   stopEngineSounds();
   running=false;finishing=false;finished=true;
+
+  const isAllPerfect = perfectCount===TOTAL;
+  if(isAllPerfect){
+    launchAllPerfectCelebration();
+  }
   cancelAnimationFrame(raf);
 
   const total=((now-startTime)/1000).toFixed(2);
   const cleared=successCount>=3;
 
-  statusEl.style.color=cleared?'#6fe18a':'#ff6868';
-  statusEl.textContent=cleared?'GOAL!':'TIME OVER';
-  substatusEl.textContent=cleared?'FINISH':'OUT';
+  if(!cleared && !isAllPerfect){
+    launchTimeOverEffect();
+  }
+
+  statusEl.style.color=cleared?'#6fe18a':'#d7dce0';
+  statusEl.textContent=cleared?'GOAL!':'TIME OVER...';
+  substatusEl.textContent=cleared?'FINISH':'惜しい！';
 
   if(navigator.vibrate)navigator.vibrate([30,35,30,35,60]);
 
   setTimeout(()=>{
+    celebration.classList.remove('active');
+    timeoutFx.classList.remove('active');
+    celebration.innerHTML='<div id="allPerfectText">ALL PERFECT!!</div><div id="perfectSub">5 / 5 PERFECT</div>';
     overlay.innerHTML=`
       <div class="panel">
-        <h1>${cleared?'GOAL!':'TIME OVER'}</h1>
+        <h1>${cleared?'GOAL!':'TIME OVER...'}</h1>
         <p><b>${total} 秒</b></p>
         <p>${selectedMode}秒モード</p>
         <p>PERFECT ${successCount} / ${TOTAL}</p>
-        <p class="note">${cleared?'目標クリア！':`${selectedMode}秒を超えてアウト！`}</p>
+        <p class="note">${cleared?'目標クリア！':'惜しい！あと少し！'}</p>
         <button id="retryBtn">もう一度</button>
       </div>`;
     overlay.style.display='flex';
 
     document.getElementById('retryBtn').onclick=showStartScreen;
-  },240);
+  },isAllPerfect?1700:(cleared?240:1400));
 }
 
 function fail(title,reason){
@@ -714,6 +1027,7 @@ function showHowTo(){
 }
 
 function showStartScreen(){
+  timeoutFx.classList.remove('active');
   overlay.classList.add('start-screen');
   overlay.innerHTML=`
     <div class="panel">
